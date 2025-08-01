@@ -59,8 +59,16 @@ X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, 
 # --- Train Models ---
 log_reg = LogisticRegression().fit(X_train, y_train)
 rf = RandomForestClassifier(random_state=42).fit(X_train, y_train)
-xgb = XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42).fit(X_train, y_train)
-lgbm = LGBMClassifier(random_state=42).fit(X_train, y_train)
+xgb = XGBClassifier(eval_metric='logloss', random_state=42).fit(X_train, y_train)
+lgbm_params = {
+    'min_gain_to_split': 0.0,
+    'min_data_in_leaf': 10,
+    'max_depth': 6,
+    'num_leaves': 31,
+    'verbosity': -1,  # Suppress logs
+    'random_state': 42
+}
+lgbm = LGBMClassifier(**lgbm_params).fit(X_train, y_train)
 svm = SVC(kernel='rbf', probability=True).fit(X_train, y_train)
 
 model_names = ['Logistic Regression', 'Random Forest', 'XGBoost', 'LightGBM', 'SVM']
