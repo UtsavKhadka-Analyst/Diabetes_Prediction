@@ -80,6 +80,23 @@ with tab1:
     sns.heatmap(df_cleaned.corr(), annot=True, cmap='coolwarm', ax=ax)
     st.pyplot(fig_corr)
 
+    # --- Boxplots Before Cleaning ---
+    st.subheader("📦 Boxplots (Before Outlier Removal)")
+    for col in df.select_dtypes(include=['float64', 'int64']).columns:
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.boxplot(x=df[col], ax=ax)
+    ax.set_title(f'Boxplot of {col}')
+    st.pyplot(fig)
+
+    # --- Boxplots After Cleaning ---
+    st.subheader("📦 Boxplots (After Outlier Removal)")
+    for col in df_cleaned.select_dtypes(include=['float64', 'int64']).columns:
+    fig, ax = plt.subplots(figsize=(8, 4))
+    sns.boxplot(x=df_cleaned[col], ax=ax)
+    ax.set_title(f'Boxplot of {col}')
+    st.pyplot(fig)
+
+
     st.subheader("📈 Feature Distributions")
     for col in df_cleaned.select_dtypes(include=['float64', 'int64']).columns:
         fig, ax = plt.subplots()
