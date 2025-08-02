@@ -152,9 +152,10 @@ with tab4:
     input_df = pd.DataFrame([[pregnancies, glucose, blood_pressure, skin_thickness,
                           insulin, bmi, dpf, age]], columns=X.columns)
     user_scaled = scaler.transform(input_df)
+    user_scaled_df = pd.DataFrame(user_scaled, columns=X.columns)
 
-    prediction = log_reg.predict(user_scaled)[0]
-    probability = log_reg.predict_proba(user_scaled)[0][1]
+    prediction = log_reg.predict(user_scaled_df)[0]
+    probability = log_reg.predict_proba(user_scaled_df)[0][1]
 
     result = "✅ No Diabetes" if prediction == 0 else "⚠️ Diabetes"
     st.metric(label="Prediction", value=result)
