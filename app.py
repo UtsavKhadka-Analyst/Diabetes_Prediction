@@ -53,7 +53,7 @@ df_cleaned = remove_outliers_iqr(df)
 X = df_cleaned.drop('Outcome', axis=1)
 y = df_cleaned['Outcome']
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+X_scaled = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, stratify=y, random_state=42)
 
 # --- Train Models ---
