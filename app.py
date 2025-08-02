@@ -149,9 +149,9 @@ with tab3:
 # --- Tab 4: Patient Prediction ---
 with tab4:
     st.subheader("🩺 Patient Diabetes Prediction")
-input_df = pd.DataFrame([[pregnancies, glucose, blood_pressure, skin_thickness,
+    input_df = pd.DataFrame([[pregnancies, glucose, blood_pressure, skin_thickness,
                           insulin, bmi, dpf, age]], columns=X.columns)
-user_scaled = scaler.transform(input_df)
+    user_scaled = scaler.transform(input_df)
 
     prediction = log_reg.predict(user_scaled)[0]
     probability = log_reg.predict_proba(user_scaled)[0][1]
