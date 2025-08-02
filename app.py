@@ -87,6 +87,8 @@ with tab1:
     fig_corr, ax = plt.subplots(figsize=(10, 6))
     sns.heatmap(df_cleaned.corr(), annot=True, cmap='coolwarm', ax=ax)
     st.pyplot(fig_corr)
+    plt.close(fig)
+
 
     # --- Boxplots Before Cleaning ---
     st.subheader("📦 Boxplots (Before Outlier Removal)")
@@ -95,6 +97,8 @@ with tab1:
         sns.boxplot(x=df[col], ax=ax)
         ax.set_title(f'Boxplot of {col}')
         st.pyplot(fig)
+        plt.close(fig)
+
 
     # --- Boxplots After Cleaning ---
     st.subheader("📦 Boxplots (After Outlier Removal)")
@@ -103,6 +107,8 @@ with tab1:
         sns.boxplot(x=df_cleaned[col], ax=ax)
         ax.set_title(f'Boxplot of {col}')
         st.pyplot(fig)
+        plt.close(fig)
+
 
 
     st.subheader("📈 Feature Distributions")
@@ -111,6 +117,8 @@ with tab1:
         sns.histplot(df_cleaned[col], kde=True, ax=ax)
         ax.set_title(f'Distribution of {col}')
         st.pyplot(fig)
+        plt.close(fig)
+
 
 # --- Tab 2: Model Training ---
 with tab2:
@@ -127,8 +135,12 @@ with tab3:
     sns.barplot(x=model_names, y=accuracies, ax=ax)
     ax.set_title("Model Accuracy Comparison")
     ax.set_ylabel("Accuracy")
-    ax.set_xticklabels(model_names, rotation=45)
+    ax.set_xticks(range(len(model_names)))
+    ax.set_xticklabels(model_names)
+    ax.tick_params(axis='x', labelrotation=45)
     st.pyplot(fig_acc)
+    plt.close(fig)
+
 
     st.subheader("📋 Accuracy Table")
     accuracy_table = pd.DataFrame({'Model': model_names, 'Accuracy': accuracies}).sort_values(by='Accuracy', ascending=False)
@@ -137,8 +149,9 @@ with tab3:
 # --- Tab 4: Patient Prediction ---
 with tab4:
     st.subheader("🩺 Patient Diabetes Prediction")
-    user_input = np.array([[pregnancies, glucose, blood_pressure, skin_thickness, insulin, bmi, dpf, age]])
-    user_scaled = scaler.transform(user_input)
+input_df = pd.DataFrame([[pregnancies, glucose, blood_pressure, skin_thickness,
+                          insulin, bmi, dpf, age]], columns=X.columns)
+user_scaled = scaler.transform(input_df)
 
     prediction = log_reg.predict(user_scaled)[0]
     probability = log_reg.predict_proba(user_scaled)[0][1]
