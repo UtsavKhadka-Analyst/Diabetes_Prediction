@@ -87,7 +87,7 @@ with tab1:
     fig_corr, ax = plt.subplots(figsize=(10, 6))
     sns.heatmap(df_cleaned.corr(), annot=True, cmap='coolwarm', ax=ax)
     st.pyplot(fig_corr)
-    plt.close(fig)
+    plt.close(fig_corr)
 
 
     # --- Boxplots Before Cleaning ---
@@ -139,7 +139,7 @@ with tab3:
     ax.set_xticklabels(model_names)
     ax.tick_params(axis='x', labelrotation=45)
     st.pyplot(fig_acc)
-    plt.close(fig)
+    plt.close(fig_acc)
 
 
     st.subheader("📋 Accuracy Table")
